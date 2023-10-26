@@ -6,13 +6,13 @@ import com.nbagmsimulator.springmvc.model.Coach;
 
 public interface CoachService {
 	
-	Coach findById(long id);
+	Coach findById(Long id);
 	
 	Coach findByName(String name);
 	
 	Coach hireCoach(Coach coach);
 
-	Coach fireCoach(long id);
+	Coach fireCoach(Long id);
 
 	List<Coach> getAllCoaches(); 
 
@@ -21,5 +21,7 @@ public interface CoachService {
 	boolean isCoachExist(Coach coach);
 	
 	Coach getHeadCoach();
+	
+	boolean deleteCoach(Long id);
 
 }

@@ -6,13 +6,15 @@ import com.nbagmsimulator.springmvc.model.Player;
 
 public interface PlayerService {
 	
-	Player findById(long id);
+	Player findById(Long id);
 	
 	Player findByName(String name);
 	
 	Player signPlayer(Player player);
 
-	Player releasePlayer(long id);
+	Player releasePlayer(Long id);
+	
+	boolean deletePlayer(Long id);
 
 	List<Player> getAllPlayers(); 
 

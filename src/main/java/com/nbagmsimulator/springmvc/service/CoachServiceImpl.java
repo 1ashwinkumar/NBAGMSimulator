@@ -20,7 +20,7 @@ public class CoachServiceImpl implements CoachService{
 	}
 
 	@Override
-	public Coach findById(long id) {
+	public Coach findById(Long id) {
 		for(Coach coach: coaches)
 			if(coach.getId() == id)
 				return coach;
@@ -37,7 +37,9 @@ public class CoachServiceImpl implements CoachService{
 	@Override
 	public Coach hireCoach(Coach coach) {
 		if(!isCoachExist(coach) || coach.getTeam()==null) {
-			coach.setId(counter.incrementAndGet());
+			if(!isCoachExist(coach)) {
+				coach.setId(counter.incrementAndGet());
+			}
 			coaches.add(coach);
 			return coach;
 		}
@@ -45,14 +47,16 @@ public class CoachServiceImpl implements CoachService{
 	}
 
 	@Override
-	public Coach fireCoach(long id) {
-		if(findById(id)!=null) {
-			Coach temp=findById(id);
-			coaches.remove(temp);
-			temp.setTeam(null);
-			coaches.add(temp);
-			return temp;
-		}
+	public Coach fireCoach(Long id) {
+		for(Coach c: coaches)
+			if(findById(id)!=null) {
+				int index=coaches.indexOf(c);
+				c.setTeam(null);
+				c.setContractLength(null);
+				c.setSalary(null);
+				coaches.add(index, c);
+				return c;
+			}
 		return null;
 	}
 
@@ -86,6 +90,15 @@ public class CoachServiceImpl implements CoachService{
 		values.add(new Coach(counter.incrementAndGet(), "Sam Cassell", false, "76ers", 70, 72, 4, 18));
 		values.add(new Coach(counter.incrementAndGet(), "Stu Jackson", false, "Grizzlies", 61, 71, 2, 7));
 		return values;
+	}
+
+	@Override
+	public boolean deleteCoach(Long id) {
+		if(findById(id)!=null) {
+			coaches.remove(findById(id));
+			return true;
+		}
+		return false;
 	}
 
 }

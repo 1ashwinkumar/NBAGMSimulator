@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Coach {
 	
-	private long id;
+	private Long id;
 	
 	private String name;
 	
@@ -12,18 +12,18 @@ public class Coach {
 	
 	private String team;
 	
-	private int offRating;
+	private Integer offRating;
 	
-	private int defRating;
+	private Integer defRating;
 	
-	private int contractLength;
+	private Integer contractLength;
 	
-	private int salary;
+	private Integer salary;
 	
 	public Coach() {}
 	
-	public Coach(long id, String name, boolean isHeadCoach, String team, int offRating, int defRating,
-			int contractLength, int salary) {
+	public Coach(Long id, String name, boolean isHeadCoach, String team, Integer offRating, Integer defRating,
+			Integer contractLength, Integer salary) {
 		this.id=id;
 		this.name=name;
 		this.isHeadCoach=isHeadCoach;
@@ -34,7 +34,7 @@ public class Coach {
 		this.salary=salary;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 	
@@ -66,35 +66,35 @@ public class Coach {
 		this.team=team;
 	}
 	
-	public int getOffRating() {
+	public Integer getOffRating() {
 		return this.offRating;
 	}
 	
-	public void setOffRating(int offRating) {
+	public void setOffRating(Integer offRating) {
 		this.offRating=offRating;
 	}
 	
-	public int getdefRating() {
+	public Integer getDefRating() {
 		return this.defRating;
 	}
 	
-	public void setDefRating(int defRating) {
+	public void setDefRating(Integer defRating) {
 		this.defRating=defRating;
 	}
 	
-	public int getContractLength() {
+	public Integer getContractLength() {
 		return this.contractLength;
 	}
 	
-	public void setContractLength(int contractLength) {
+	public void setContractLength(Integer contractLength) {
 		this.contractLength=contractLength;
 	}
 	
-	public int getSalary() {
+	public Integer getSalary() {
 		return this.salary;
 	}
 	
-	public void setSalary(int salary) {
+	public void setSalary(Integer salary) {
 		this.salary=salary;
 	}
 	

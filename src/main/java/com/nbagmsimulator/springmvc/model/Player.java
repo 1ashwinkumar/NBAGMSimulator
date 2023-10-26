@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Player {
 	
-	private long id;
+	private Long id;
 	
 	private String name;
 	
@@ -12,18 +12,18 @@ public class Player {
 	
 	private String team;
 	
-	private int age;
+	private Integer age;
 	
-	private int contractLength;
+	private Integer contractLength;
 	
-	private int salary;
+	private Integer salary;
 	
-	private double[] stats; // points, rebounds, blocks, steals, assists, turnovers;
+	private Stats stats; // points, rebounds, blocks, steals, assists, turnovers;
 	
 	public Player() {}
 	
-	public Player(long id, String name, String position, String team, int age,
-			int contractLength, int salary, double[] stats) {
+	public Player(Long id, String name, String position, String team, Integer age,
+			Integer contractLength, Integer salary, Stats stats) {
 		this.id=id;
 		this.name=name;
 		this.position=position;
@@ -66,7 +66,7 @@ public class Player {
 		this.team=team;
 	}
 	
-	public int getAge() {
+	public Integer getAge() {
 		return this.age;
 	}
 	
@@ -74,27 +74,27 @@ public class Player {
 		this.age=age;
 	}
 	
-	public int getContractLength() {
+	public Integer getContractLength() {
 		return this.contractLength;
 	}
 	
-	public void setContractLength(int contractLength) {
+	public void setContractLength(Integer contractLength) {
 		this.contractLength=contractLength;
 	}
 	
-	public int getSalary() {
+	public Integer getSalary() {
 		return this.salary;
 	}
 	
-	public void setSalary(int salary) {
+	public void setSalary(Integer salary) {
 		this.salary=salary;
 	}
 	
-	public double[] getStats() {
+	public Stats getStats() {
 		return this.stats;
 	}
 	
-	public void setStats(double[] stats) {
+	public void setStats(Stats stats) {
 		this.stats=stats;
 	}
 	
@@ -123,12 +123,12 @@ public class Player {
             "age=" + age + ", " +
             "contract length=" + contractLength + ", " +
             "salary=$" + salary + " million, " +
-            "points=" + stats[0] + ", " +
-            "rebounds=" + stats[1] + ", " +
-            "blocks=" + stats[2] + ", " +
-            "steals=" + stats[3] + ", " +
-            "assists=" + stats[4] + ", " +
-            "turnovers=" + stats[5] + "]";
+            "points=" + getStats().pts + ", " +
+            "rebounds=" + getStats().rebds + ", " +
+            "blocks=" + getStats().blks + ", " +
+            "steals=" + getStats().stls + ", " +
+            "assists=" + getStats().asts + ", " +
+            "turnovers=" + getStats().tos + "]";
     }
 
 }
