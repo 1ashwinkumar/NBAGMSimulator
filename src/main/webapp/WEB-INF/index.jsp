@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My App</title>
+  <title>Home Page</title>
 </head>
 <body>
   <nav>
