@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +6,200 @@
 <title>Player Management Page</title>
 </head>
 <body>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/player">Player Management</a>
+		<a href="/coach">Coach Management</a>
+		<a href="/login">Login</a>
+		<a href="/signup">Sign Up</a>
+	</nav>
+	<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+		<h5 class="my-0 mr-md-auto font-weight-normal">Sign Player</h5>
+	</div>
+	<main>
+		<div class="container"
+			ng-controller="PlayerController as playerController">
+			<div class="panel panel-default">
+				<div class="formcontainer">
+					<form ng-submit="playerController.submit()" name="playerForm"
+						class="form-horizontal">
+						<input type="hidden" ng-model="playerController.player.id" />
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Player
+									Name</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="playerController.player.name"
+										name="name" class="name form-control input-sm"
+										placeholder="Enter Player's Name" required ng-minlength="5"
+										id="playerNameInput" />
+									<div class="has-error" ng-show="playerForm.$dirty">
+										<span ng-show="playerForm.name.$error.required">This is a
+											required field</span> <span ng-show="playerForm.name.$error.minlength">Minimum
+											length required is 5</span> <span ng-show="playerForm.name.$invalid">This
+											field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Position</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="playerController.player.position"
+										class="form-control input-sm"
+										placeholder="Enter the Player's position.  This field is optional."
+										id="playerPositionInput" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Team</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="playerController.player.team"
+										name="team" class="team form-control input-sm"
+										placeholder="Enter Player's Team" required ng-minlength="5"
+										id="playerTeamInput" />
+									<div class="has-error" ng-show="playerForm.$dirty">
+										<span ng-show="playerForm.team.$error.required">This is a
+											required field</span> <span ng-show="playerForm.team.$error.minlength">Minimum
+											length required is 2</span> <span ng-show="playerForm.team.$invalid">This
+											field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Age</label>
+								<div class="col-md-7">
+									<input type="number" ng-model="playerController.player.age"
+										name="age" class="age form-control input-sm"
+										placeholder="Enter the Player's Age" required
+										id="playerAgeInput" />
+									<div class="has-error" ng-show="playerForm.$dirty">
+										<span ng-show="playerForm.age.$error.required">This is
+											a required field</span> <span ng-show="playerForm.age.$invalid">This
+											field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Contract Length</label>
+								<div class="col-md-7">
+									<input type="number" ng-model="playerController.player.contractLength"
+										name="age" class="age form-control input-sm"
+										placeholder="Enter the Player's Contract Length" required
+										id="playerContractLengthInput" />
+									<div class="has-error" ng-show="playerForm.$dirty">
+										<span ng-show="playerForm.contractLength.$error.required">This is
+											a required field</span> <span ng-show="playerForm.contractLength.$invalid">This
+											field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group col-md-12">
+								<label class="col-md-2 control-lable" for="file">Salary</label>
+								<div class="col-md-7">
+									<input type="number" ng-model="playerController.player.salary"
+										name="age" class="age form-control input-sm"
+										placeholder="Enter the Player's Salary" required
+										id="playerSalaryInput" />
+									<div class="has-error" ng-show="playerForm.$dirty">
+										<span ng-show="playerForm.salary.$error.required">This is
+											a required field</span> <span ng-show="playerForm.salary.$invalid">This
+											field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+						<!-- stats section here -->
+						</div>						
+
+						<div class="row">
+							<div class="form-group col-md-12">
+								<div class="col-md-7">
+									<input type="submit"
+										value="{{!playerController.player.id ? 'Sign' : 'Release'}}"
+										class="btn btn-primary btn-sm" ng-disabled="playerForm.$invalid"
+										id="addButton">
+									<button type="button" ng-click="playerController.reset()"
+										class="btn btn-warning btn-sm" ng-disabled="playerForm.$pristine"
+										id="resetButton">Reset Form</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					<span class="lead">Player Table</span>
+				</div>
+				<div class="tablecontainer">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Position</th>
+								<th>Team</th>
+								<th>Age</th>
+								<th>Contract Length</th>
+								<th>Salary</th>
+								<th>Points</th>
+								<th>Rebounds</th>
+								<th>Blocks</th>
+								<th>Steals</th>
+								<th>Assists</th>
+								<th>Turnovers</th>
+								<th width="30%"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="u in playerController.players">
+								<td><span ng-bind="u.id"></span></td>
+								<td><span ng-bind="u.name"></span></td>
+								<td><span ng-bind="position"></span></td>
+								<td><span ng-bind="u.team"></span></td>
+								<td><span ng-bind="u.age"></span></td>
+								<td><span ng-bind="u.contractLength"></span></td>
+								<td><span ng-bind="u.salary"></span></td>
+								
+								<td>
+									<button type="button" ng-click="playerController.edit(u)"
+										class="btn btn-success custom-width" id="editButton{{u.id}}">Sign/Release Player</button>
+									<button type="button" ng-click="playerController.remove(u.id)"
+										class="btn btn-danger custom-width" id="removeButton{{u.id}}">Delete Player</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
+	<script src="/static/js/app.js"></script>
+	<script src="/static/js/service/player_service.js"></script>
+	<script src="/static/js/controller/player_controller.js"></script>
+
 
 </body>
 </html>

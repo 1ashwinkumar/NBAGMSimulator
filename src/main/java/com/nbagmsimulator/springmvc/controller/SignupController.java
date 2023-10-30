@@ -56,6 +56,7 @@ public class SignupController {
 	@RequestMapping(value = "/users/signup", method = RequestMethod.POST)
 	public ResponseEntity<?> register(@RequestBody @Valid User form) {
 		logger.info("register success {}", form);
+		accountService.saveUser(form);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

@@ -21,12 +21,12 @@ angular.module('myApp').controller('PlayernController', ['$scope', '$log', 'Play
                     $log.log('fetchAllPlayers(): self.players ', self.players);
                 },
                 function (errResponse) {
-                    $log.error('Error while fetching Pokemons');
+                    $log.error('Error while fetching players');
                 }
             );
     }
 
-    function createPokemon(pokemon) {
+    function signNewPlayer(pokemon) {
         PokemonService.createPokemon(pokemon)
             .then(
                 fetchAllPokemons,
@@ -36,15 +36,19 @@ angular.module('myApp').controller('PlayernController', ['$scope', '$log', 'Play
             );
     }
 
-    function updatePokemon(pokemon, id) {
+    function signExistingPlayer(pokemon, id) {
         PokemonService.updatePokemon(pokemon, id)
             .then(
-                fetchAllPokemons,
+                fetchAllPlayers,
                 function (errResponse) {
                     $log.error('Error while updating Pokemon');
                 }
             );
     }
+    
+    function releasePlayer(){
+		
+	}
 
     function deletePokemon(id) {
         PokemonService.deletePokemon(id)
