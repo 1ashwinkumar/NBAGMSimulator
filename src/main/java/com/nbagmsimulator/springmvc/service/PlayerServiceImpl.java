@@ -56,6 +56,7 @@ public class PlayerServiceImpl implements PlayerService{
 				p.setTeam(null);
 				p.setContractLength(null);
 				p.setSalary(null);
+				players.remove(index);
 				players.add(index, p);
 				return p;
 			}

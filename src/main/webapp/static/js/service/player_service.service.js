@@ -30,8 +30,8 @@ function PlayerServiceFactory($http) {
         return $http.put(REST_SERVICE_URI, player);
     }
 
-    function releasePlayer(player, id) {
-        return $http.put(REST_SERVICE_URI + id, player);
+    function releasePlayer(id) {
+        return $http.put(REST_SERVICE_URI + id);
     }
 
     function deletePlayer(id) {

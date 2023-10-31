@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('myApp').controller('PlayernController', ['$scope', '$log', 'PlayerService', function ($scope, $log, PlayerService) {
+angular.module('myApp').controller('PlayerController', ['$scope', '$log', 'PlayerService', function ($scope, $log, PlayerService) {
     var self = this;
     self.player = {};
     self.players = [];
 
-    self.submit = submit;
-    self.edit = edit;
+    self.sign = sign; //submit
+    self.release = release; //edit
     self.remove = remove;
     self.reset = reset;
 
@@ -26,56 +26,67 @@ angular.module('myApp').controller('PlayernController', ['$scope', '$log', 'Play
             );
     }
 
-    function signNewPlayer(pokemon) {
-        PokemonService.createPokemon(pokemon)
-            .then(
-                fetchAllPokemons,
-                function (errResponse) {
-                    $log.error('Error while creating Pokemon');
-                }
-            );
-    }
-
-    function signExistingPlayer(pokemon, id) {
-        PokemonService.updatePokemon(pokemon, id)
+    function signNewPlayer(player) {
+        PlayerService.signNewPlayer(player)
             .then(
                 fetchAllPlayers,
                 function (errResponse) {
-                    $log.error('Error while updating Pokemon');
+                    $log.error('Error while signing new Player');
                 }
             );
     }
     
-    function releasePlayer(){
-		
-	}
-
-    function deletePokemon(id) {
-        PokemonService.deletePokemon(id)
+    function signExistingPlayer(player) {
+        PlayerService.signExistingPlayer(player)
             .then(
-                fetchAllPokemons,
+                fetchAllPlayers,
                 function (errResponse) {
-                    $log.error('Error while deleting Pokemon');
+                    $log.error('Error while signing new Player');
                 }
             );
     }
 
-    function submit() {
-        if (self.pokemon.id === undefined) {
-            $log.log('Saving New Pokemon', self.pokemon);
-            createPokemon(self.pokemon);
+    function releasePlayer(id) {
+        PlayerService.releasePlayer(id)
+            .then(
+                fetchAllPlayers,
+                function (errResponse) {
+                    $log.error('Error while releasing player.');
+                }
+            );
+    }
+    
+    function deletePlayer(id) {
+        PlayerService.deletePlayer(id)
+            .then(
+                fetchAllPlayers,
+                function (errResponse) {
+                    $log.error('Error while deleting Player');
+                }
+            );
+    }
+
+    function sign() {
+        if (!self.player.id) {
+            $log.log('Saving New Player', self.player);
+            signNewPlayer(self.player);
         } else {
-            updatePokemon(self.pokemon, self.pokemon.id);
-            $log.log('Pokemon updated with id ', self.pokemon.id);
+            signExistingPlayer(self.player);
+            $log.log('Player updated with id ', self.player.id);
         }
         reset();
     }
 
-    function edit(pokemon) {
-        $log.log('pokemon.id to be edited', pokemon.id);
-        for (var i = 0; i < self.pokemons.length; i++) {
-            if (self.pokemons[i].id === pokemon.id) {
-                self.pokemon = angular.copy(self.pokemons[i]);
+    function release(id) {
+        $log.log('player id to be released', id);
+        for (var i = 0; i < self.players.length; i++) {
+            if (self.players[i].id === id) {
+                self.players[i].team=null;
+                self.players[i].contractLength=null;
+                self.players[i].salary=null;
+                self.player=angular.copy(self.players[i]);
+                releasePlayer(id);
+            	$log.log('Player released with ID: ', id);
                 break;
             }
         }
@@ -83,15 +94,16 @@ angular.module('myApp').controller('PlayernController', ['$scope', '$log', 'Play
 
     function remove(id) {
         $log.log('id to be deleted', id);
-        if (self.pokemon.id === id) {//clean form if the pokemon to be deleted is shown there.
+        if (self.player.id === id) {//clean form if the player to be deleted is shown there.
             reset();
         }
-        deletePokemon(id);
+        deletePlayer(id);
     }
 
 
     function reset() {
-        self.pokemon = { id: null, name: '', attack: '', defense: '' };
+        self.player = { id: null, name: '', position: '', team: '', age: '', contractLength: '',
+        salary: '', stats: {} };
         $scope.myForm.$setPristine(); //reset Form
     }
 
