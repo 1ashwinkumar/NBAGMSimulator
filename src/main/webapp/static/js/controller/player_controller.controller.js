@@ -81,10 +81,6 @@ angular.module('myApp').controller('PlayerController', ['$scope', '$log', 'Playe
         $log.log('player id to be released', id);
         for (var i = 0; i < self.players.length; i++) {
             if (self.players[i].id === id) {
-                self.players[i].team=null;
-                self.players[i].contractLength=null;
-                self.players[i].salary=null;
-                self.player=angular.copy(self.players[i]);
                 releasePlayer(id);
             	$log.log('Player released with ID: ', id);
                 break;

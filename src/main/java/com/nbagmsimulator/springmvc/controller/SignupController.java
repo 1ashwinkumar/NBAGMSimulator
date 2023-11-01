@@ -26,10 +26,10 @@ import com.nbagmsimulator.springmvc.service.AccountService;
 @RestController
 public class SignupController {
 
-	private static Logger logger = LoggerFactory.getLogger(SignupController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
 	
 	@Autowired
-	AccountService accountService; 
+	private AccountService accountService; 
 
 	// -------------------- Retrieve All Users ---------------------------------
 	@RequestMapping(value = "/users", method = RequestMethod.GET)

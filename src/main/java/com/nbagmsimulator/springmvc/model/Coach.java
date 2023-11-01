@@ -97,33 +97,5 @@ public class Coach {
 	public void setSalary(Integer salary) {
 		this.salary=salary;
 	}
-	
-	public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Coach))
-            return false;
-        Coach c = (Coach) o;
-        return Objects.equals(id, c.id) && Objects.equals(name, c.name) && Objects.equals(isHeadCoach, c.isHeadCoach) &&
-        		Objects.equals(team, c.team) && Objects.equals(offRating, c.offRating)  && Objects.equals(defRating, c.defRating)
-        		&& Objects.equals(contractLength, c.contractLength) && Objects.equals(salary, c.salary);
-    }
-
-    public int hashCode() {
-        return Objects.hash(id, name, isHeadCoach, team, offRating, defRating, contractLength, salary);
-    }
-
-    @Override
-    public String toString() {
-        return "Coach info: [" +
-            " id=" + id + ", " +
-            "name=" + name + ", " +
-            "isHeadCoach=" + isHeadCoach + ", " +
-            "team=" + team + ", " +
-            "offensive rating=" + offRating + ", " +
-            "defensive rating=" + defRating + ", " +
-            "contract length=" + contractLength + ", " +
-            "salary=$" + salary + " million]";
-    }
 
 }

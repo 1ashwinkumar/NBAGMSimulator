@@ -97,38 +97,5 @@ public class Player {
 	public void setStats(Stats stats) {
 		this.stats=stats;
 	}
-	
-	public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Player))
-            return false;
-        Player p = (Player) o;
-        return Objects.equals(id, p.id) && Objects.equals(name, p.name) && Objects.equals(position, p.position) &&
-        		Objects.equals(team, p.team) && Objects.equals(age, p.age) && Objects.equals(contractLength, p.contractLength)
-        		&& Objects.equals(salary, p.salary) && Objects.equals(stats, p.stats);
-    }
-
-    public int hashCode() {
-        return Objects.hash(id, name, position, team, age, contractLength, salary, stats);
-    }
-
-    @Override
-    public String toString() {
-        return "Player info and statistics: [" +
-            " id=" + id + ", " +
-            "name=" + name + ", " +
-            "position=" + position + ", " +
-            "team=" + team + ", " +
-            "age=" + age + ", " +
-            "contract length=" + contractLength + ", " +
-            "salary=$" + salary + " million, " +
-            "points=" + getStats().pts + ", " +
-            "rebounds=" + getStats().rebds + ", " +
-            "blocks=" + getStats().blks + ", " +
-            "steals=" + getStats().stls + ", " +
-            "assists=" + getStats().asts + ", " +
-            "turnovers=" + getStats().tos + "]";
-    }
 
 }

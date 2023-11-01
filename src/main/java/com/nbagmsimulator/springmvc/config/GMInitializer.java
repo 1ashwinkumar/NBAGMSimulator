@@ -23,7 +23,7 @@ public class GMInitializer extends AbstractAnnotationConfigDispatcherServletInit
 
 	@Override
     protected Filter[] getServletFilters() {
-        Filter [] singleton = { new CORSFilter() };
+        Filter [] singleton = { };
         return singleton;
     }
 
