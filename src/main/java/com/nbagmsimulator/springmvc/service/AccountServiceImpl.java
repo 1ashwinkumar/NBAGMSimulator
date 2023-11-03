@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.nbagmsimulator.springmvc.model.User;
 
-@Service("AccountService")
+@Service
 public class AccountServiceImpl implements AccountService{
 
     private static final AtomicLong counter = new AtomicLong();
