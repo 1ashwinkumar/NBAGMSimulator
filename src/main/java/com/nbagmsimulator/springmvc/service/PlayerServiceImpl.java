@@ -38,12 +38,21 @@ public class PlayerServiceImpl implements PlayerService{
 
 	@Override
 	public Player signPlayer(Player player) {
-		if(!isPlayerExist(player) || player.getTeam()==null) {
-			if(!isPlayerExist(player)) {
-				player.setId(counter.incrementAndGet());
-			}
+		if(!isPlayerExist(player)) {
+			player.setId(counter.incrementAndGet());
 			players.add(player);
 			return player;
+		}
+		else if(player.getTeam()!=null) {
+			for(Player p: players) {
+				if(p.getName().equals(player.getName())) {
+					int index=players.indexOf(p);
+					players.remove(index);
+					player.setId(p.getId());
+					players.add(index, player);
+					return player;
+				}
+			}
 		}
 		return null;
 	}

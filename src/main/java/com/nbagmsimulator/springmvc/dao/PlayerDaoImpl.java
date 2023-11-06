@@ -1,7 +1,13 @@
 package com.nbagmsimulator.springmvc.dao;
 
+import java.util.Collections;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
@@ -17,56 +23,84 @@ public class PlayerDaoImpl implements PlayerDao{
 
 	@Override
 	public Player findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Player p WHERE p.id = :id"; // HQL Query
+		Query query = sessionFactory.openSession().createQuery(hql);
+		query.setParameter("id", id);
+		return (Player) query.uniqueResult();
 	}
 
 	@Override
 	public Player findByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "FROM Player p WHERE p.name = :name"; // HQL Query
+		Query query = sessionFactory.openSession().createQuery(hql);
+		query.setParameter("name", name);
+		return (Player) query.uniqueResult();
 	}
 
 	@Override
+	@Transactional
 	public Player signNewPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		hibernateTemplate.save(player);
+		return player;
 	}
 
 	@Override
+	@Transactional
 	public Player signExistingPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		Player resultingPlayer = hibernateTemplate.load(Player.class, player.getId());
+		resultingPlayer.setId(player.getId());
+        resultingPlayer.setName(player.getName());
+        resultingPlayer.setPosition(player.getPosition());
+        resultingPlayer.setTeam(player.getTeam());
+        resultingPlayer.setAge(player.getAge());
+        resultingPlayer.setContractLength(player.getContractLength());
+        resultingPlayer.setSalary(player.getSalary());
+        resultingPlayer.setStats(player.getStats());
+        hibernateTemplate.update(resultingPlayer);
+        return resultingPlayer;
 	}
 
 	@Override
+	@Transactional
 	public long releasePlayer(long id) {
-		// TODO Auto-generated method stub
-		return 0;
+		Player resultingPlayer = hibernateTemplate.load(Player.class, id);
+        resultingPlayer.setTeam(null);
+        resultingPlayer.setContractLength(null);
+        resultingPlayer.setSalary(null);
+        hibernateTemplate.update(resultingPlayer);
+        return id;
 	}
 
 	@Override
+	@Transactional
 	public long deletePlayerById(long id) {
-		// TODO Auto-generated method stub
-		return 0;
+		Query query = sessionFactory.openSession().createSQLQuery("DELETE FROM Player WHERE id = :id");
+		query.setLong("id", id);
+		return (Long.valueOf(query.executeUpdate()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Player> getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria criteria = sessionFactory.openSession().createCriteria(Player.class); // Criteria Query
+		return (List<Player>) criteria.list();
 	}
 
 	@Override
 	public List<Player> clearRoster() {
-		// TODO Auto-generated method stub
-		return null;
+		sessionFactory.openSession().createQuery("DELETE FROM Player").executeUpdate();
+        return Collections.emptyList();
 	}
 
 	@Override
 	public boolean isPlayerExist(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		Query query = sessionFactory.openSession().createQuery("FROM Player p WHERE p.name = :name");
+    	query.setString("name", player.getName());
+    	List<?> pList = query.list();
+    	if (pList.isEmpty()) {
+    		return false;
+    	}
+    	return true;
 	}
 
 }

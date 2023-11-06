@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbagmsimulator.springmvc.model.Coach;
 import com.nbagmsimulator.springmvc.model.Login;
 import com.nbagmsimulator.springmvc.model.Player;
+import com.nbagmsimulator.springmvc.service.CoachService;
 import com.nbagmsimulator.springmvc.service.PlayerService;
 
 @Controller
@@ -19,6 +21,9 @@ public class IndexPageController {
 	
 	@Autowired
 	private PlayerService playerService;
+	
+	@Autowired
+	private CoachService coachService;
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String index() {
@@ -42,8 +47,19 @@ public class IndexPageController {
 	}
 	
 	@RequestMapping(value="/coach", method = RequestMethod.GET)
-	public String coach() {
-		return "coach";
+	public ModelAndView viewCoachesPage() {
+		Coach c = new Coach();
+		ModelAndView mv = new ModelAndView("coach", "coachForm", c);
+		return mv;
+	}
+	
+	@PostMapping(value="/coachDetail")
+	public ModelAndView getCoachDetails(@ModelAttribute Coach c) {
+		Coach detail = coachService.hireCoach(c);
+		
+		ModelAndView mv = new ModelAndView("coachDetail");
+		mv.addObject("coach", detail);
+		return mv;
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)

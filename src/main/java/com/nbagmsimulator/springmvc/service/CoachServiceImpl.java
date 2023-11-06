@@ -49,11 +49,12 @@ public class CoachServiceImpl implements CoachService{
 	@Override
 	public Coach fireCoach(Long id) {
 		for(Coach c: coaches)
-			if(findById(id)!=null) {
+			if(id.equals(c.getId())) {
 				int index=coaches.indexOf(c);
 				c.setTeam(null);
 				c.setContractLength(null);
 				c.setSalary(null);
+				coaches.remove(index);
 				coaches.add(index, c);
 				return c;
 			}
