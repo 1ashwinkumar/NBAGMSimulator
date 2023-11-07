@@ -1,22 +1,52 @@
 package com.nbagmsimulator.springmvc.model;
 
-public class User {
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(name = "USERNAME")
 	private String username;
 
+	@Column(name = "ADDRESS")
 	private String address;
 
+	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "TEAM")
+	private String team;
+	
+	//TODO do OneToMany
+	private List<Player> playersMoved;
+	
+	//TODO do OneToMany
+	private List<Coach> coachesMoved;
 
 	public User(){}
 
-	public User(long id, String username, String address, String email) {
+	public User(long id, String username, String address, String email, String team, List<Player> playersMoved,
+			List<Coach> coachesMoved) {
 		this.id = id;
 		this.username = username;
 		this.address = address;
 		this.email = email;
+		this.team = team;
+		this.playersMoved = playersMoved;
+		this.coachesMoved = coachesMoved;
 	}
 
 	public long getId() {
@@ -50,5 +80,28 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	public String getTeam() {
+		return team;
+	}
+	
+	public void setTeam(String team) {
+		this.team = team;
+	}
+	
+	public List<Player> getPlayersMoved(){
+		return playersMoved;
+	}
+	
+	public void setPlayersMoved(List<Player> playersMoved) {
+		this.playersMoved = playersMoved;
+	}
+	
+	public List<Coach> getCoachesMoved(){
+		return coachesMoved;
+	}
+	
+	public void setCoachesMoved(List<Coach> coachesMoved) {
+		this.coachesMoved = coachesMoved;
+	}
 }

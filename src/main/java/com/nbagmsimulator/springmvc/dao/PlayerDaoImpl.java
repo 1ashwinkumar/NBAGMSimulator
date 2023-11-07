@@ -10,9 +10,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.nbagmsimulator.springmvc.model.Player;
 
+@Repository
 public class PlayerDaoImpl implements PlayerDao{
 	
 	@Autowired
@@ -22,7 +24,7 @@ public class PlayerDaoImpl implements PlayerDao{
     HibernateTemplate hibernateTemplate;
 
 	@Override
-	public Player findById(Long id) {
+	public Player findById(long id) {
 		String hql = "FROM Player p WHERE p.id = :id"; // HQL Query
 		Query query = sessionFactory.openSession().createQuery(hql);
 		query.setParameter("id", id);

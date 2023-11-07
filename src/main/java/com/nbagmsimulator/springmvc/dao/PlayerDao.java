@@ -6,7 +6,7 @@ import com.nbagmsimulator.springmvc.model.Player;
 
 public interface PlayerDao {
 
-	Player findById(Long id);
+	Player findById(long id);
 
 	Player findByName(String name);
 

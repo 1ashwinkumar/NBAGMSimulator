@@ -2,22 +2,40 @@ package com.nbagmsimulator.springmvc.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "player")
 public class Player {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@Column(name = "NAME")
 	private String name;
 	
+	@Column(name = "POSITION")
 	private String position;
 	
+	@Column(name = "TEAM")
 	private String team;
 	
+	@Column(name = "AGE")
 	private Integer age;
 	
+	@Column(name = "CONTRACTLENGTH")
 	private Integer contractLength;
 	
+	@Column(name = "SALARY")
 	private Integer salary;
 	
+	//TODO map to column
 	private Stats stats; // points, rebounds, blocks, steals, assists, turnovers;
 	
 	public Player() {}

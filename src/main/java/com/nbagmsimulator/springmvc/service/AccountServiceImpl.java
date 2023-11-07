@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.nbagmsimulator.springmvc.model.Coach;
+import com.nbagmsimulator.springmvc.model.Player;
 import com.nbagmsimulator.springmvc.model.User;
 
 @Service
@@ -32,7 +34,7 @@ public class AccountServiceImpl implements AccountService{
         return null;
     }
 
-    public User findByName(String name) {
+    public User findByUsername(String name) {
         for(User user: users)
             if(user.getUsername().equalsIgnoreCase(name))
                 return user;
@@ -60,7 +62,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     public boolean isUserExist(User user) {
-        return findByName(user.getUsername())!=null;
+        return findByUsername(user.getUsername())!=null;
     }
 
     public void deleteAllUsers(){
@@ -69,9 +71,11 @@ public class AccountServiceImpl implements AccountService{
 
     private static List<User> populateDummyUsers(){
         List<User> users = new ArrayList<User>();
-        users.add(new User(counter.incrementAndGet(),"Sam", "NY", "sam@abc.com"));
-        users.add(new User(counter.incrementAndGet(),"Tomy", "ALBAMA", "tomy@abc.com"));
-        users.add(new User(counter.incrementAndGet(),"Kelly", "NEBRASKA", "kelly@abc.com"));
+        List<Player> emptyPlayers = new ArrayList<Player>();
+        List<Coach> emptyCoaches = new ArrayList<Coach>();
+        users.add(new User(counter.incrementAndGet(),"Sam", "NY", "sam@abc.com", "76ers", emptyPlayers, emptyCoaches));
+        users.add(new User(counter.incrementAndGet(),"Tomy", "ALBAMA", "tomy@abc.com", "Suns", emptyPlayers, emptyCoaches));
+        users.add(new User(counter.incrementAndGet(),"Kelly", "NEBRASKA", "kelly@abc.com", "Raptors", emptyPlayers, emptyCoaches));
         return users;
     }
 

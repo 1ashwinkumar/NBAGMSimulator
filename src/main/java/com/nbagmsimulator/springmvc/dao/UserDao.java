@@ -1,14 +1,14 @@
-package com.nbagmsimulator.springmvc.service;
+package com.nbagmsimulator.springmvc.dao;
 
 import java.util.List;
 
 import com.nbagmsimulator.springmvc.model.User;
 
-public interface AccountService {
+public interface UserDao {
+	
+	User findById(long id);
 
-    User findById(long id);
-
-    User findByUsername(String name);
+    User findByUsername(String username);
 
     void saveUser(User user);
 
