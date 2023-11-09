@@ -7,13 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nbagmsimulator.springmvc.model.Player;
@@ -31,7 +28,7 @@ public class PlayerController {
 
 	// -------------------Retrieve All Players------
 
-	@GetMapping(value = "/all")
+	@RequestMapping(value = "/all", method=RequestMethod.GET)
 	public ResponseEntity<?> getPlayers() {
 		List<Player> players = playerService.getAllPlayers();
 		if (players.isEmpty()) {
@@ -42,7 +39,7 @@ public class PlayerController {
 
 	// -------------------Retrieve One Player------
 
-	@GetMapping(value = "/{id}")
+	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> getPlayer(@PathVariable("id") Long id) {
 		if (playerService.getAllPlayers().isEmpty()) {
 			return new ResponseEntity<Player>(HttpStatus.NO_CONTENT);
@@ -52,21 +49,21 @@ public class PlayerController {
 
 	// -------------------Delete All Players------
 
-	@DeleteMapping(value = "/all")
+	@RequestMapping(value = "/all", method=RequestMethod.DELETE)
 	public ResponseEntity<List<Player>> deletePlayers() {
 		return new ResponseEntity<List<Player>>(playerService.clearRoster(), HttpStatus.OK);
 	}
 
 	// -------------------Delete One Player------
 
-	@DeleteMapping(value = "/{id}")
+	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<?> deletePlayer(@PathVariable("id") Long id) {
-		return new ResponseEntity<Boolean>(playerService.deletePlayer(id), HttpStatus.OK);
+		return new ResponseEntity<Long>(playerService.deletePlayer(id), HttpStatus.OK);
 	}
 	
 	// ----- Create Player and Sign to a team -------
 	
-	@PostMapping(value = "/")
+	@RequestMapping(value = "/", method=RequestMethod.POST)
 	public ResponseEntity<?> createAndSignNewPlayer(@RequestBody Player player) {
 		if (playerService.findById(player.getId())==null) {
 			return new ResponseEntity<Player>(playerService.signPlayer(player), HttpStatus.OK);
@@ -76,7 +73,7 @@ public class PlayerController {
 
 	// ------ Sign Existing Player -------
 	
-	@PutMapping(value = "/")
+	@RequestMapping(value = "/", method=RequestMethod.PUT)
 	public ResponseEntity<?> signExistingPlayer(@RequestBody Player player) {
 		if (playerService.findById(player.getId())!=null) {
 			return new ResponseEntity<Player>(playerService.signPlayer(player), HttpStatus.OK);
@@ -86,7 +83,7 @@ public class PlayerController {
 
 	
 	// ----- Release Player ----
-	@PutMapping(value = "/{id}")
+	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<?> releasePlayer(@PathVariable("id") Long id) {
 		return new ResponseEntity<Player>(playerService.releasePlayer(id), HttpStatus.OK);
 	}

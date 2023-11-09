@@ -14,7 +14,7 @@ public interface PlayerService {
 
 	Player releasePlayer(Long id);
 	
-	boolean deletePlayer(Long id);
+	long deletePlayer(Long id);
 
 	List<Player> getAllPlayers(); 
 

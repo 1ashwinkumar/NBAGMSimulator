@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.nbagmsimulator.springmvc.model.Player;
@@ -89,6 +89,7 @@ public class PlayerDaoImpl implements PlayerDao{
 	}
 
 	@Override
+	@Transactional
 	public List<Player> clearRoster() {
 		sessionFactory.openSession().createQuery("DELETE FROM Player").executeUpdate();
         return Collections.emptyList();

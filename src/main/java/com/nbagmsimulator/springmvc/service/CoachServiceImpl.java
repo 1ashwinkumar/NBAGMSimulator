@@ -4,102 +4,74 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nbagmsimulator.springmvc.dao.CoachDao;
 import com.nbagmsimulator.springmvc.model.Coach;
 
 @Service
 public class CoachServiceImpl implements CoachService{
 
-	private static final AtomicLong counter = new AtomicLong();
-
-	private static List<Coach> coaches;
-
-	static{
-		coaches=populateDummyCoaches();
-	}
+	@Autowired
+	private CoachDao coachDao;
 
 	@Override
 	public Coach findById(Long id) {
-		for(Coach coach: coaches)
-			if(coach.getId() == id)
-				return coach;
-		return null;
+		return coachDao.findById(id);
 	}
 
 	@Override
 	public Coach findByName(String name) {
-		for(Coach coach: coaches)
-			if(coach.getName() == name)
-				return coach;
-		return null;
+		return coachDao.findByName(name);
 	}
+	
 	@Override
+	@Transactional
 	public Coach hireCoach(Coach coach) {
 		if(!isCoachExist(coach) || coach.getTeam()==null) {
 			if(!isCoachExist(coach)) {
-				coach.setId(counter.incrementAndGet());
+				return coachDao.hireNewCoach(coach);
 			}
-			coaches.add(coach);
-			return coach;
+			else {
+				return coachDao.hireExistingCoach(coach);
+			}
 		}
 		return null;
 	}
 
 	@Override
+	@Transactional
 	public Coach fireCoach(Long id) {
-		for(Coach c: coaches)
-			if(id.equals(c.getId())) {
-				int index=coaches.indexOf(c);
-				c.setTeam(null);
-				c.setContractLength(null);
-				c.setSalary(null);
-				coaches.remove(index);
-				coaches.add(index, c);
-				return c;
-			}
-		return null;
+		return coachDao.fireCoach(id);
 	}
 
 	@Override
 	public List<Coach> getAllCoaches() {
-		return coaches;
+		return coachDao.getAllCoaches();
 	}
 
 	@Override
 	public List<Coach> clearStaff() {
-		coaches.clear();
-		return coaches;
+		return coachDao.clearStaff();
 	}
 
 	@Override
 	public boolean isCoachExist(Coach coach) {
-		return findByName(coach.getName())!=null;
+		return coachDao.isCoachExist(coach);
 	}
 
 	@Override
 	public Coach getHeadCoach() {
-		for(Coach coach: coaches)
-			if(coach.getIsHeadCoach())
-				return coach;
-		return null;
-	}
-
-	private static List<Coach> populateDummyCoaches(){
-		List<Coach> values = new ArrayList<Coach>();
-		values.add(new Coach(counter.incrementAndGet(), "Monte Williams", true, "Suns", 75, 80, 3, 30));
-		values.add(new Coach(counter.incrementAndGet(), "Sam Cassell", false, "76ers", 70, 72, 4, 18));
-		values.add(new Coach(counter.incrementAndGet(), "Stu Jackson", false, "Grizzlies", 61, 71, 2, 7));
-		return values;
+		return coachDao.getHeadCoach();
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteCoach(Long id) {
-		if(findById(id)!=null) {
-			coaches.remove(findById(id));
-			return true;
-		}
-		return false;
+		return coachDao.deleteCoachById(id);
 	}
 
 }

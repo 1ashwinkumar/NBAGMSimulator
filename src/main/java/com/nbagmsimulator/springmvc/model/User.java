@@ -3,11 +3,14 @@ package com.nbagmsimulator.springmvc.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,10 +33,10 @@ public class User implements Serializable{
 	@Column(name = "TEAM")
 	private String team;
 	
-	//TODO do OneToMany
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "generalManager", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Player> playersMoved;
 	
-	//TODO do OneToMany
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "generalManager", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Coach> coachesMoved;
 
 	public User(){}

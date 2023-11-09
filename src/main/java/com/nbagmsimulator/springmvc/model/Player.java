@@ -1,13 +1,18 @@
 package com.nbagmsimulator.springmvc.model;
 
-import java.util.Objects;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "player")
@@ -35,9 +40,14 @@ public class Player {
 	@Column(name = "SALARY")
 	private Integer salary;
 	
-	//TODO map to column
+	@Embedded
 	private Stats stats; // points, rebounds, blocks, steals, assists, turnovers;
-	
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "GENERAL_MANAGER", referencedColumnName = "USERNAME")
+	@JsonBackReference
+	private User generalManager;
+
 	public Player() {}
 	
 	public Player(Long id, String name, String position, String team, Integer age,
