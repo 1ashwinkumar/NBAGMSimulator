@@ -45,7 +45,6 @@
         </div>
         <ul class="nav navbar-nav">
           <li><a href="/player">Player Management</a></li>
-    	  <li><a href="/coach">Coach Management</a></li>
           <li><a href="/login">Login</a></li>
           <li><a href="/signup">Sign Up</a></li>
         </ul>

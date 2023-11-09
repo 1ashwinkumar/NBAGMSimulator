@@ -35,21 +35,16 @@ public class User implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "generalManager", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Player> playersMoved;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "generalManager", cascade = CascadeType.ALL, orphanRemoval = false)
-	private List<Coach> coachesMoved;
 
 	public User(){}
 
-	public User(long id, String username, String address, String email, String team, List<Player> playersMoved,
-			List<Coach> coachesMoved) {
+	public User(long id, String username, String address, String email, String team, List<Player> playersMoved) {
 		this.id = id;
 		this.username = username;
 		this.address = address;
 		this.email = email;
 		this.team = team;
 		this.playersMoved = playersMoved;
-		this.coachesMoved = coachesMoved;
 	}
 
 	public long getId() {
@@ -98,13 +93,5 @@ public class User implements Serializable{
 	
 	public void setPlayersMoved(List<Player> playersMoved) {
 		this.playersMoved = playersMoved;
-	}
-	
-	public List<Coach> getCoachesMoved(){
-		return coachesMoved;
-	}
-	
-	public void setCoachesMoved(List<Coach> coachesMoved) {
-		this.coachesMoved = coachesMoved;
 	}
 }
