@@ -12,11 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.BeanUtils;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nbagmsimulator.springmvc.api.model.Player;
 
 @Entity
 @Table(name = "player")
-public class Player {
+public class PlayerImpl {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,12 +49,17 @@ public class Player {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENERAL_MANAGER", referencedColumnName = "USERNAME")
 	@JsonBackReference
-	private User generalManager;
+	private UserImpl generalManager;
 
-	public Player() {}
+	public PlayerImpl() {}
 	
-	public Player(Long id, String name, String position, String team, Integer age,
-			Integer contractLength, Integer salary, Stats stats) {
+	//copy constructor
+	public PlayerImpl(Player player) {
+		BeanUtils.copyProperties(player, this);
+	}
+	
+	public PlayerImpl(Long id, String name, String position, String team, Integer age,
+			Integer contractLength, Integer salary, Stats stats, UserImpl generalManager) {
 		this.id=id;
 		this.name=name;
 		this.position=position;
@@ -60,6 +68,17 @@ public class Player {
 		this.contractLength=contractLength;
 		this.salary=salary;
 		this.stats=stats;
+		this.generalManager=generalManager;
+	}
+	
+	public static PlayerImpl convert(Player player) {
+		if(player == null) {
+			return null;
+		}
+		else if(player instanceof PlayerImpl) {
+			return (PlayerImpl) player;
+		}
+		return new PlayerImpl(player);
 	}
 	
 	public long getId() {
@@ -124,6 +143,14 @@ public class Player {
 	
 	public void setStats(Stats stats) {
 		this.stats=stats;
+	}
+	
+	public UserImpl getGeneralManager() {
+		return this.generalManager;
+	}
+	
+	public void setGeneralManager(UserImpl generalManager) {
+		this.generalManager=generalManager;
 	}
 
 }

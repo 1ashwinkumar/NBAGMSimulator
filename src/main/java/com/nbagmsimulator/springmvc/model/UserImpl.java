@@ -13,13 +13,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.beans.BeanUtils;
+
+import com.nbagmsimulator.springmvc.api.model.User;
+
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class UserImpl implements Serializable, User{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(name = "USERNAME")
 	private String username;
@@ -34,11 +38,11 @@ public class User implements Serializable{
 	private String team;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "generalManager", cascade = CascadeType.ALL, orphanRemoval = false)
-	private List<Player> playersMoved;
+	private List<PlayerImpl> playersMoved;
 
-	public User(){}
+	public UserImpl(){}
 
-	public User(long id, String username, String address, String email, String team, List<Player> playersMoved) {
+	public UserImpl(Long id, String username, String address, String email, String team, List<PlayerImpl> playersMoved) {
 		this.id = id;
 		this.username = username;
 		this.address = address;
@@ -47,11 +51,26 @@ public class User implements Serializable{
 		this.playersMoved = playersMoved;
 	}
 
-	public long getId() {
+	//copy constructor
+	public UserImpl(User user) {
+		BeanUtils.copyProperties(user, this);
+	}
+	
+	public static UserImpl convert(User user) {
+		if(user == null) {
+			return null;
+		}
+		else if(user instanceof UserImpl) {
+			return (UserImpl) user;
+		}
+		return new UserImpl(user);
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -87,11 +106,11 @@ public class User implements Serializable{
 		this.team = team;
 	}
 	
-	public List<Player> getPlayersMoved(){
+	public List<PlayerImpl> getPlayersMoved(){
 		return playersMoved;
 	}
 	
-	public void setPlayersMoved(List<Player> playersMoved) {
+	public void setPlayersMoved(List<PlayerImpl> playersMoved) {
 		this.playersMoved = playersMoved;
 	}
 }

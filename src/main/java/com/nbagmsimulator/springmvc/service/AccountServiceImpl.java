@@ -7,8 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nbagmsimulator.springmvc.api.model.User;
 import com.nbagmsimulator.springmvc.dao.UserDao;
-import com.nbagmsimulator.springmvc.model.User;
+import com.nbagmsimulator.springmvc.model.UserImpl;
 
 @Service
 public class AccountServiceImpl implements AccountService{

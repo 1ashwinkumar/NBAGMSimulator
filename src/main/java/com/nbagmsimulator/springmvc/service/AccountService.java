@@ -2,7 +2,7 @@ package com.nbagmsimulator.springmvc.service;
 
 import java.util.List;
 
-import com.nbagmsimulator.springmvc.model.User;
+import com.nbagmsimulator.springmvc.api.model.User;
 
 public interface AccountService {
 

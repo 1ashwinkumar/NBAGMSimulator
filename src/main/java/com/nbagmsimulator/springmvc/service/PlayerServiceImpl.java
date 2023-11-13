@@ -7,8 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nbagmsimulator.springmvc.api.model.Player;
 import com.nbagmsimulator.springmvc.dao.PlayerDao;
-import com.nbagmsimulator.springmvc.model.Player;
+import com.nbagmsimulator.springmvc.model.PlayerImpl;
 
 @Service
 public class PlayerServiceImpl implements PlayerService{

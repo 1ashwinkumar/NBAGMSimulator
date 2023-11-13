@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbagmsimulator.springmvc.api.model.Player;
 import com.nbagmsimulator.springmvc.model.Login;
-import com.nbagmsimulator.springmvc.model.Player;
+import com.nbagmsimulator.springmvc.model.PlayerImpl;
 import com.nbagmsimulator.springmvc.service.PlayerService;
 
 @Controller
@@ -26,7 +27,7 @@ public class IndexPageController {
 
 	@RequestMapping(value="/player", method = RequestMethod.GET)
 	public ModelAndView viewPlayersPage() {
-		Player p = new Player();
+		PlayerImpl p = new PlayerImpl();
 		ModelAndView mv = new ModelAndView("player", "playerForm", p);
 		return mv;
 	}

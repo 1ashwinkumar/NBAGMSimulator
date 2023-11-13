@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.nbagmsimulator.springmvc.model.User;
+import com.google.common.collect.ImmutableList;
+import com.nbagmsimulator.springmvc.api.model.User;
+import com.nbagmsimulator.springmvc.model.UserImpl;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -23,16 +25,16 @@ public class UserDaoImpl implements UserDao{
     HibernateTemplate hibernateTemplate;
 
 	@Override
-	public User findById(long id) {
-		return hibernateTemplate.get(User.class, id);
+	public UserImpl findById(long id) {
+		return hibernateTemplate.get(UserImpl.class, id);
 	}
 
 	@Override
-	public User findByUsername(String username) {
+	public UserImpl findByUsername(String username) {
 		String hql = "FROM User p WHERE p.username = :username"; // HQL Query
         Query query = sessionFactory.openSession().createQuery(hql);
         query.setParameter("username", username);
-        return (User) query.uniqueResult();
+        return (UserImpl) query.uniqueResult();
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	@Transactional
 	public void updateUser(User user) {
-		User resultingUser = hibernateTemplate.load(User.class, user.getId());
+		UserImpl resultingUser = hibernateTemplate.load(UserImpl.class, user.getId());
         resultingUser.setId(user.getId());
         resultingUser.setUsername(user.getUsername());
         resultingUser.setAddress(user.getAddress());
@@ -62,8 +64,8 @@ public class UserDaoImpl implements UserDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllUsers() {
-		Criteria criteria = sessionFactory.openSession().createCriteria(User.class); // Criteria Query
-        return (List<User>) criteria.list();
+		Criteria criteria = sessionFactory.openSession().createCriteria(UserImpl.class); // Criteria Query
+        return ImmutableList.copyOf(criteria.list());
 	}
 
 	@Override

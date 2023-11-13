@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbagmsimulator.springmvc.api.model.User;
 import com.nbagmsimulator.springmvc.model.Login;
-import com.nbagmsimulator.springmvc.model.User;
+import com.nbagmsimulator.springmvc.model.UserImpl;
 import com.nbagmsimulator.springmvc.service.AccountService;
 
 @RestController
@@ -47,14 +48,14 @@ public class SignupController {
 		User user = accountService.findById(id);
 		if (user == null) {
             logger.debug("User with id " + id + " not found");
-            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	//-----------New User Signup---------
 	@RequestMapping(value = "/users/signup", method = RequestMethod.POST)
-	public ResponseEntity<?> register(@RequestBody @Valid User form) {
+	public ResponseEntity<?> register(@RequestBody @Valid UserImpl form) {
 		logger.info("register success {}", form);
 		accountService.saveUser(form);
 		return new ResponseEntity<>(HttpStatus.CREATED);

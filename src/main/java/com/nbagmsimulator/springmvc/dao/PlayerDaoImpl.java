@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.nbagmsimulator.springmvc.model.Player;
+import com.google.common.collect.ImmutableList;
+import com.nbagmsimulator.springmvc.api.model.Player;
+import com.nbagmsimulator.springmvc.model.PlayerImpl;
 
 @Repository
 public class PlayerDaoImpl implements PlayerDao{
@@ -49,7 +51,7 @@ public class PlayerDaoImpl implements PlayerDao{
 	@Override
 	@Transactional
 	public Player signExistingPlayer(Player player) {
-		Player resultingPlayer = hibernateTemplate.load(Player.class, player.getId());
+		PlayerImpl resultingPlayer = hibernateTemplate.load(PlayerImpl.class, player.getId());
 		resultingPlayer.setId(player.getId());
         resultingPlayer.setName(player.getName());
         resultingPlayer.setPosition(player.getPosition());
@@ -59,13 +61,13 @@ public class PlayerDaoImpl implements PlayerDao{
         resultingPlayer.setSalary(player.getSalary());
         resultingPlayer.setStats(player.getStats());
         hibernateTemplate.update(resultingPlayer);
-        return resultingPlayer;
+        return (Player) resultingPlayer;
 	}
 
 	@Override
 	@Transactional
 	public long releasePlayer(long id) {
-		Player resultingPlayer = hibernateTemplate.load(Player.class, id);
+		PlayerImpl resultingPlayer = hibernateTemplate.load(PlayerImpl.class, id);
         resultingPlayer.setTeam(null);
         resultingPlayer.setContractLength(null);
         resultingPlayer.setSalary(null);
@@ -84,8 +86,8 @@ public class PlayerDaoImpl implements PlayerDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Player> getAllPlayers() {
-		Criteria criteria = sessionFactory.openSession().createCriteria(Player.class); // Criteria Query
-		return (List<Player>) criteria.list();
+		Criteria criteria = sessionFactory.openSession().createCriteria(PlayerImpl.class); // Criteria Query
+		return ImmutableList.copyOf(criteria.list());
 	}
 
 	@Override

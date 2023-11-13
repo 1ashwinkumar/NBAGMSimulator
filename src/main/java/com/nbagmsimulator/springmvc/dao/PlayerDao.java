@@ -2,7 +2,8 @@ package com.nbagmsimulator.springmvc.dao;
 
 import java.util.List;
 
-import com.nbagmsimulator.springmvc.model.Player;
+import com.nbagmsimulator.springmvc.api.model.Player;
+
 
 public interface PlayerDao {
 
