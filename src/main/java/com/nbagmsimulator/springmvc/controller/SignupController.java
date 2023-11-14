@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbagmsimulator.springmvc.api.manager.AccountManager;
 import com.nbagmsimulator.springmvc.api.model.User;
 import com.nbagmsimulator.springmvc.model.Login;
 import com.nbagmsimulator.springmvc.model.UserImpl;
@@ -30,12 +31,12 @@ public class SignupController {
 	private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
 	
 	@Autowired
-	private AccountService accountService; 
+	private AccountManager accountManager; 
 
 	// -------------------- Retrieve All Users ---------------------------------
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllUsers() {
-		List<User> users = accountService.findAllUsers();
+		List<User> users = accountManager.findAllUsers();
 		if (users.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -45,7 +46,7 @@ public class SignupController {
 	// ------------------------- Retrieve A User By Id-----------------------------
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getUserById(@RequestParam("id") Long id) {
-		User user = accountService.findById(id);
+		User user = accountManager.findById(id);
 		if (user == null) {
             logger.debug("User with id " + id + " not found");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -57,7 +58,7 @@ public class SignupController {
 	@RequestMapping(value = "/users/signup", method = RequestMethod.POST)
 	public ResponseEntity<?> register(@RequestBody @Valid UserImpl form) {
 		logger.info("register success {}", form);
-		accountService.saveUser(form);
+		accountManager.saveUser(form);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
