@@ -12,18 +12,8 @@ angular.module('myApp').factory('AccountService', ['$http', '$q', function($http
     return factory;
 
     function fetchAllUsers() {
-        var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching Users');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
+
+        return $http.get(REST_SERVICE_URI).then(function (res){ return res.data});
     }
 
     function createUser(user) {

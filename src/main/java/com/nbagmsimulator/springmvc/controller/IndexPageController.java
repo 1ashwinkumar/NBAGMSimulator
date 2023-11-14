@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nbagmsimulator.springmvc.api.model.Player;
 import com.nbagmsimulator.springmvc.model.Login;
-import com.nbagmsimulator.springmvc.model.Player;
+import com.nbagmsimulator.springmvc.model.PlayerImpl;
 import com.nbagmsimulator.springmvc.service.PlayerService;
 
 @Controller
@@ -27,23 +27,18 @@ public class IndexPageController {
 
 	@RequestMapping(value="/player", method = RequestMethod.GET)
 	public ModelAndView viewPlayersPage() {
-		Player p = new Player();
+		PlayerImpl p = new PlayerImpl();
 		ModelAndView mv = new ModelAndView("player", "playerForm", p);
 		return mv;
 	}
 	
-	@PostMapping(value="/playerDetail")
+	@RequestMapping(value="/playerDetail", method=RequestMethod.POST)
 	public ModelAndView getPlayerDetails(@ModelAttribute Player p) {
 		Player detail = playerService.signPlayer(p);
 		
 		ModelAndView mv = new ModelAndView("playerDetail");
 		mv.addObject("player", detail);
 		return mv;
-	}
-	
-	@RequestMapping(value="/coach", method = RequestMethod.GET)
-	public String coach() {
-		return "coach";
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
