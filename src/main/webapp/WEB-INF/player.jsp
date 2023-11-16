@@ -4,6 +4,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Player Management Page</title>
+<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
+	<script src="static/js/app.module.js"></script>
+	<script src="/static/js/service/player_service.service.js"></script>
+	<script src="/static/js/controller/player_controller.controller.js"></script>
 </head>
 <body>
 	<nav>
@@ -101,14 +106,8 @@
 						</table>
 					</div>
 				</div>
-	      </div>
 	      </section>
 	</main>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
-	<script src="/static/js/app.js"></script>
-	<script src="/static/js/service/player_service.js"></script>
-	<script src="/static/js/controller/player_controller.js"></script>
 
 
 </body>
