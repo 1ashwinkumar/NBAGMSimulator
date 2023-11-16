@@ -80,7 +80,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="u in playerController.players">
+								<tr ng-repeat="u in playerController.players track by u.id">
 									<td><span ng-bind="u.id"></span></td>
 									<td><span ng-bind="u.name"></span></td>
 									<td><span ng-bind="position"></span></td>

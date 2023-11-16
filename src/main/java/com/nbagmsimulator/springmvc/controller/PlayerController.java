@@ -18,7 +18,6 @@ import com.nbagmsimulator.springmvc.api.model.Player;
 import com.nbagmsimulator.springmvc.model.PlayerImpl;
 import com.nbagmsimulator.springmvc.service.PlayerService;
 
-@RequestMapping(value="/players")
 @RestController
 public class PlayerController {
 	@Autowired

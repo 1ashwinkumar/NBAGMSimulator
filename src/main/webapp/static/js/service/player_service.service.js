@@ -6,7 +6,7 @@ PlayerServiceFactory.$inject = ['$http']
 
 function PlayerServiceFactory($http) {
 
-    var REST_SERVICE_URI = '/players';
+    var REST_SERVICE_URI = '/player';
 
     var factory = {
         fetchAllPlayers: fetchAllPlayers,
